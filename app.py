@@ -79,6 +79,60 @@ st.markdown(
         background: #4f46e5;
         border: none;
     }
+    
+/* Improve readability throughout the dashboard */
+.stApp,
+.stApp p,
+.stApp label,
+.stApp li,
+.stMarkdown,
+[data-testid="stWidgetLabel"] {
+    color: #1f2937 !important;
+}
+
+/* Make headings dark and clear */
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4 {
+    color: #172554 !important;
+}
+
+/* Make the tab names readable */
+.stTabs [data-baseweb="tab"] {
+    color: #334155 !important;
+}
+
+.stTabs [data-baseweb="tab"] p {
+    color: #334155 !important;
+    font-weight: 600 !important;
+}
+
+.stTabs [aria-selected="true"] p {
+    color: #4338ca !important;
+}
+
+/* Keep the gradient banner text white */
+.hero,
+.hero h1,
+.hero p {
+    color: #ffffff !important;
+}
+
+/* Make the footer visible */
+.stApp footer,
+.stApp footer p {
+    color: #64748b !important;
+}
+
+/* Improve input text visibility */
+.stTextInput input,
+.stTextArea textarea,
+.stNumberInput input {
+    color: #172554 !important;
+    background-color: #ffffff !important;
+}
+
     </style>
     """,
     unsafe_allow_html=True,
