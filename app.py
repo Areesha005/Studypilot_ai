@@ -133,6 +133,32 @@ st.markdown(
     background-color: #ffffff !important;
 }
 
+/* Make buttons readable */
+.stButton > button {
+    background-color: #4f46e5 !important;
+    color: #ffffff !important;
+    border: 1px solid #4338ca !important;
+    border-radius: 10px !important;
+}
+
+.stButton > button p,
+.stButton > button span {
+    color: #ffffff !important;
+}
+
+/* Disabled buttons remain readable */
+.stButton > button:disabled {
+    background-color: #e2e8f0 !important;
+    color: #64748b !important;
+    border-color: #cbd5e1 !important;
+    opacity: 1 !important;
+}
+
+.stButton > button:disabled p,
+.stButton > button:disabled span {
+    color: #64748b !important;
+}
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -352,23 +378,33 @@ with planner_tab:
         if topic.strip()
     ]
 
+    
     if topics:
         st.markdown("### Today's checklist")
 
+        completed_topics = set(st.session_state.completed_topics)
+
         for index, topic in enumerate(topics):
-            is_done = topic in st.session_state.completed_topics
+            key = f"planner_topic_{index}_{topic}"
 
-            checked = st.checkbox(
+            if key not in st.session_state:
+                st.session_state[key] = topic in completed_topics
+
+            def update_topic(topic_name=topic, widget_key=key):
+                current = set(st.session_state.completed_topics)
+
+                if st.session_state[widget_key]:
+                    current.add(topic_name)
+                else:
+                    current.discard(topic_name)
+
+                st.session_state.completed_topics = list(current)
+
+            st.checkbox(
                 topic,
-                value=is_done,
-                key=f"planner_topic_{index}_{topic}",
+                key=key,
+                on_change=update_topic,
             )
-
-            if checked and topic not in st.session_state.completed_topics:
-                st.session_state.completed_topics.append(topic)
-
-            elif not checked and topic in st.session_state.completed_topics:
-                st.session_state.completed_topics.remove(topic)
 
         completed = sum(
             topic in st.session_state.completed_topics
@@ -379,6 +415,7 @@ with planner_tab:
         st.caption(f"{completed} of {len(topics)} topics completed.")
     else:
         st.info("Add your first topic above to begin planning.")
+
 
 
 # ====================================================
