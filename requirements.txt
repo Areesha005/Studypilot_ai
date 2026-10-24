@@ -1,3 +1,6 @@
 
 streamlit>=1.36.0
 pypdf>=5.0.0
+uagents==0.25.5
+openai>=1.30.0
+python-dotenv>=1.0.0
